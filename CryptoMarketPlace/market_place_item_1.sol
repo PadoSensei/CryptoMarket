@@ -1,12 +1,13 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.13;
+pragma solidity 0.8.7;
 import "http://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.0.0/contracts/token/ERC20/ERC20.sol";
-import "@chaninlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
+import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 
 // smart contract 1 = marketplace item 1
 
 contract marketplaceItem1 {
-    AggregatorV3Interface internal priceFeed = AggregatorV3Interface(); // requires Interface address
+    AggregatorV3Interface internal priceFeed =
+        AggregatorV3Interface(0xD4a33860578De61DBAbDc8BFdb98FD742fA7028e); // requires Interface address
 
     // record of people who have already bought
     mapping(address => bool) public alreadyBought;
@@ -18,8 +19,10 @@ contract marketplaceItem1 {
     address public owner = payable(msg.sender);
 
     // imports the tokens to use and build on
-    IERC20 public usdcToken = IERC20(); // requires address
-    IERC20 public usdtToken = IERC20(); // requires address
+    IERC20 public usdcToken =
+        IERC20(0xd9145CCE52D386f254917e481eB44e9943F39138); // requires address
+
+    //IERC20 public usdtToken = IERC20 ("0xUSDTontractHERE"); // requires address
 
     function payInUSDC() public returns (bool) {
         // checks address is not on alreadyBought list
@@ -44,7 +47,7 @@ contract marketplaceItem1 {
         );
 
         // Transfers the price from sender acc to owner acc
-        usdtToken.transferFrom(msg.sender, owner, price);
+        usdcToken.transferFrom(msg.sender, owner, price);
 
         // adds sender address to Bought list
         alreadyBought[msg.sender] = true;
@@ -60,24 +63,27 @@ contract marketplaceItem1 {
             ,
             ,
 
-        ) = priceFeed.lastestRoundData();
+        ) = priceFeed.latestRoundData();
 
-        return priceofUSD / 10**8;
+        return priceOfUSD / 10**8;
     }
 
-    function getPriceInEth() public view return(int){
+    function getPriceInEth() public view returns (int256) {
         // result of function call
-        return int(price) / getCurrentPriceOfEth();
+        return int256(price) / getCurrentPriceOfEth();
     }
 
-    function payInEth() {
+    // function payInEth() {
 
-    }
+    // }
 
-    function payInEth() public payable returns (bool){
+    function payInEth() public payable returns (bool) {
         // requires eth sent to be equal to price in ETH
-        require(msg.value == unint(getPriceInETH()), "Not enough ETh sent!");
-        (bool sent, /*data*/) = owner.call(value: msg.value)("");
+        require(msg.value == uint256(getPriceInEth()), "Not enough ETh sent!");
+        (
+            bool sent, /*data*/
+
+        ) = owner.call{value: msg.value}("Transaction complete");
 
         // transfers received money to contract owner
         require(sent = true, "Failed to tranfer ETH");
@@ -86,6 +92,5 @@ contract marketplaceItem1 {
         alreadyBought[msg.sender] = true;
         // confirms addition and sends that truthy value as the truthy for the transaction. Smart
         return alreadyBought[msg.sender];
-
     }
 }
