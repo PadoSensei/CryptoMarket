@@ -8,6 +8,8 @@ import {
 } from "react-router-dom";
 import Homepage from "./components/Homepage";
 import Product from "./components/Product";
+import Profile from "./components/Profile";
+import Shrine from "./components/Shrine";
 
 function App() {
   return (
@@ -26,6 +28,12 @@ function App() {
             <li>
               <a href="./Products">Products</a>
             </li>
+            <li>
+              <a href="./Profile">Profile</a>
+            </li>
+            <li>
+              <a href="./Shrine">Shrine</a>
+            </li>
             <li className="nav-cta">
               <a href="#">Connect</a>
             </li>
@@ -37,6 +45,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Homepage />} />
           <Route path="/Products" element={<Product />} />
+          <Route path="/Shrine" element={<Shrine />} />
+          <Route path="/Profile" element={<Profile />} />
         </Routes>
       </Router>
     </div>

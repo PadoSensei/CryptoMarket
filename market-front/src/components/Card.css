@@ -46,6 +46,9 @@
     overflow: hidden;
     position: relative;
 }
+    .card__image-container:hover {
+        background-color: antiquewhite;
+    }
 
     .card__image-container img {
         width: 100%;

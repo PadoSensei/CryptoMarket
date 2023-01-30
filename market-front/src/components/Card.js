@@ -3,7 +3,7 @@ import css from "./Card.css";
 
 const Card = ({ image, name, skill }) => {
   return (
-    <main className="card">
+    <main className="cards">
       <div className="card__image-container">
         <img src={image} width="400" alt="description" />
       </div>

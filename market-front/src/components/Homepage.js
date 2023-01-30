@@ -7,12 +7,9 @@ export default function Homepage(props) {
     <section>
       <div className="hero">
         <h1>Web3 Yo!</h1>
-        <p>
-          eiowcioencoiwc oieciec ieinienfienf ieiewiefiefj ewijiejiewjd
-          jwdjdieiewj
-        </p>
+        <p>You ready to train?</p>
         <button className="header-cta">
-          <a href="/Product"></a>
+          <a href="/Products">Products</a>
         </button>
       </div>
 
