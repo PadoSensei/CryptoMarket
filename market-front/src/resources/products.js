@@ -6,6 +6,7 @@ import titanium_ninja from "../resources/titanium_ninja.png";
 
 const products = [
   {
+    key: 1,
     name: "Red Ninja",
     image: red_ninja,
     skill: "Throwing Stars",
@@ -13,18 +14,21 @@ const products = [
   },
 
   {
+    key: 2,
     name: "Black Ninja",
     image: black_ninja,
     skill: "Shadow Kill",
     price: 10,
   },
   {
+    key: 3,
     name: "Green Ninja",
     image: green_ninja,
     skill: "Silent Movement",
     price: 10,
   },
   {
+    key: 4,
     name: "Titanium Ninja",
     image: titanium_ninja,
     skill: "Perfect Defense",
