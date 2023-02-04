@@ -1,24 +1,32 @@
 import { ethers } from "ethers";
 import css from "./Card.css";
 import React, { useEffect, useState } from "react";
-import ABI from "../ABI.json";
-import tokenABI from "../tokenABI.json";
-console.log(ABI);
+import marketABI from "../Web3/marketABI.json";
+import tokenABI from "../Web3/tokenABI.json";
+import addresses from "../Web3/constants";
+console.log(marketABI);
+
+const marketContractAddress = "0x4D9eA1C94910FDF8E59A77738B21ed6050DFb4BC";
+const tokenContractAddress = "0x0EA75a2bFB5bbe3D5D997Ac980774BDA9C6Cf33a";
 
 const Card = ({ image, name, skill, price }) => {
   const [Bought, setBought] = useState(false);
+
+  // const { marketContractAddress, tokenContractAddress } = addresses;
+  // console.log(marketContractAddress, tokenContractAddress);
 
   useEffect(() => {
     checkBought();
   }, []);
 
   const checkBought = async () => {
+    console.log(marketContractAddress);
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
     const currentAddress = await provider.getSigner().getAddress();
     const marketplaceContract = new ethers.Contract(
-      "0xf8c3e332f8eca5e3b5de35d8fb16a8d6d54f7852",
-      ABI,
+      marketContractAddress,
+      marketABI,
       signer
     );
     const bought = await marketplaceContract.alreadyBought(currentAddress);
@@ -30,7 +38,7 @@ const Card = ({ image, name, skill, price }) => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const address = await provider.send("eth_requestAccounts");
     console.log("trying to connect...");
-    console.log(window.ethereum.isMetaMask);
+    // console.log(window.ethereum.isMetaMask);
     const currentAddress = await provider.getSigner().getAddress();
     console.log("current address", currentAddress);
     console.log(" address", address);
@@ -41,11 +49,10 @@ const Card = ({ image, name, skill, price }) => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
     const currentAddress = await provider.getSigner.getAddress;
-    const marketplaceAddress = 0xda0bab807633f07f013f94dd0e6a4f96f8742b53; /* need address */
-    // where is ABI coming from?
+    const marketplaceAddress = 0xda0bab807633f07f013f94dd0e6a4f96f8742b53;
     const marketplaceContract = new ethers.Contract(
       marketplaceAddress,
-      ABI,
+      marketABI,
       signer
     );
     const amount = await provider.getBalance(currentAddress);
@@ -73,45 +80,45 @@ const Card = ({ image, name, skill, price }) => {
   };
 
   const MintMe = async () => {
-    // connect to contract
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
-    const currentAddress = await provider.getSigner();
-    const token = new ethers.Contract(
-      "0x6Ab650e8E4399E2E7E4D2B1888f6712eF458430F",
-      tokenABI,
-      signer
-    );
-    // get balance of wallet
-    console.log(currentAddress);
-    // get tokens
-    token.mintTwenty();
-
-    // print balance
+    // refactor
+    // // connect to contract
+    // console.log("minting....");
+    // const provider = new ethers.providers.Web3Provider(window.ethereum);
+    // const signer = provider.getSigner();
+    // const currentAddress = await provider.getSigner();
+    // const token = new ethers.Contract(
+    //   "0x0EA75a2bFB5bbe3D5D997Ac980774BDA9C6Cf33a",
+    //   tokenABI,
+    //   signer
+    // );
+    // // get balance of wallet
+    // const balanceOfWallet = await token.balanceOf(
+    //   "0xfa57A10F1B25c57819e6B0713094bD6adE11e504"
+    // );
+    // console.log(balanceOfWallet);
+    // // get tokens
+    // token.mintTwenty();
+    // // print balance
+    // const newBalanceOfWallet = await token.balanceOf("currentAddress");
+    // console.log(newBalanceOfWallet);
   };
 
   const payInUSDC = async () => {
     Connect();
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
-    // const currentAddress = await provider.getSigner.getAddress;
-    const currentAddress = "0xfa57A10F1B25c57819e6B0713094bD6adE11e504";
-    const marketplaceAddress = "0xf8C3E332F8eCA5e3b5de35d8FB16A8d6D54f7852";
+    const currentAddress = await provider.getSigner.getAddress;
+    // const currentAddress = "0xfa57A10F1B25c57819e6B0713094bD6adE11e504";
+    const marketplaceAddress = marketContractAddress;
 
     const marketplaceContract = new ethers.Contract(
       marketplaceAddress,
-      ABI,
+      marketABI,
       signer
     );
-    const token = new ethers.Contract(
-      "0x6Ab650e8E4399E2E7E4D2B1888f6712eF458430F",
-      tokenABI,
-      signer
-    );
+    const token = new ethers.Contract(tokenContractAddress, tokenABI, signer);
 
-    const totalAmount = await token.balanceOf(
-      "0xfa57A10F1B25c57819e6B0713094bD6adE11e504"
-    );
+    const totalAmount = await token.balanceOf(tokenContractAddress);
     const totalAllowed = await token.allowance(
       currentAddress,
       marketplaceAddress
@@ -176,12 +183,12 @@ const Card = ({ image, name, skill, price }) => {
           </>
         )}
         <div>
-          <button className="connect-button" onClick={payInUSDC}>
+          <button className="connect-button" onClick={Connect}>
             Connect
           </button>
-          {/* <button className="connect-button" disable={true} onClick={MintMe}>
+          <button className="connect-button" disable="true" onClick={MintMe}>
             Mint me
-          </button> */}
+          </button>
         </div>
       </div>
     </main>
