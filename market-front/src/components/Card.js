@@ -4,28 +4,28 @@ import React, { useEffect, useState } from "react";
 import marketABI from "../Web3/marketABI.json";
 import tokenABI from "../Web3/tokenABI.json";
 import addresses from "../Web3/constants";
-console.log(marketABI);
+console.log(addresses);
 
-const marketContractAddress = "0x4D9eA1C94910FDF8E59A77738B21ed6050DFb4BC";
-const tokenContractAddress = "0x0EA75a2bFB5bbe3D5D997Ac980774BDA9C6Cf33a";
+// const marketContractAddress = "0x4D9eA1C94910FDF8E59A77738B21ed6050DFb4BC";
+// const tokenContractAddress = "0x0EA75a2bFB5bbe3D5D997Ac980774BDA9C6Cf33a";
 
 const Card = ({ image, name, skill, price }) => {
   const [Bought, setBought] = useState(false);
 
-  // const { marketContractAddress, tokenContractAddress } = addresses;
-  // console.log(marketContractAddress, tokenContractAddress);
+  // const { marketPlaceContractAddress, tokenContractAddress } = addresses;
+  // console.log(typeof marketPlaceContractAddress, tokenContractAddress);
 
   useEffect(() => {
     checkBought();
   }, []);
 
   const checkBought = async () => {
-    console.log(marketContractAddress);
+    console.log("0x6Ab650e8E4399E2E7E4D2B1888f6712eF458430F");
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
     const currentAddress = await provider.getSigner().getAddress();
     const marketplaceContract = new ethers.Contract(
-      marketContractAddress,
+      "0x6ab650e8e4399e2e7e4d2b1888f6712ef458430f",
       marketABI,
       signer
     );
@@ -49,7 +49,7 @@ const Card = ({ image, name, skill, price }) => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
     const currentAddress = await provider.getSigner.getAddress;
-    const marketplaceAddress = 0xda0bab807633f07f013f94dd0e6a4f96f8742b53;
+    const marketplaceAddress = 0x6ab650e8e4399e2e7e4d2b1888f6712ef458430f;
     const marketplaceContract = new ethers.Contract(
       marketplaceAddress,
       marketABI,
@@ -82,60 +82,91 @@ const Card = ({ image, name, skill, price }) => {
   const MintMe = async () => {
     // refactor
     // // connect to contract
-    // console.log("minting....");
-    // const provider = new ethers.providers.Web3Provider(window.ethereum);
-    // const signer = provider.getSigner();
-    // const currentAddress = await provider.getSigner();
-    // const token = new ethers.Contract(
-    //   "0x0EA75a2bFB5bbe3D5D997Ac980774BDA9C6Cf33a",
-    //   tokenABI,
-    //   signer
-    // );
-    // // get balance of wallet
-    // const balanceOfWallet = await token.balanceOf(
-    //   "0xfa57A10F1B25c57819e6B0713094bD6adE11e504"
-    // );
-    // console.log(balanceOfWallet);
-    // // get tokens
-    // token.mintTwenty();
-    // // print balance
-    // const newBalanceOfWallet = await token.balanceOf("currentAddress");
-    // console.log(newBalanceOfWallet);
+    console.log("minting....");
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const currentAddress = await provider.getSigner();
+    const token = new ethers.Contract(
+      "0x4D9eA1C94910FDF8E59A77738B21ed6050DFb4BC",
+      tokenABI,
+      signer
+    );
+    // get balance of wallet
+    const balanceOfWallet = await token.balanceOf(
+      "0xfa57A10F1B25c57819e6B0713094bD6adE11e504"
+    );
+    console.log(parseInt(balanceOfWallet));
+    // get tokens
+    await token.mintTwenty();
+    // print balance
+    const newBalanceOfWallet = await token.balanceOf(
+      "0xfa57A10F1B25c57819e6B0713094bD6adE11e504"
+    );
+    console.log(parseInt(newBalanceOfWallet));
   };
 
   const payInUSDC = async () => {
     Connect();
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
-    const currentAddress = await provider.getSigner.getAddress;
+    const currentAddress = await provider.getSigner().getAddress();
+
+    const walletBalance = await provider.getBalance(currentAddress);
+    console.log(parseInt(walletBalance));
     // const currentAddress = "0xfa57A10F1B25c57819e6B0713094bD6adE11e504";
-    const marketplaceAddress = marketContractAddress;
+    //const marketplaceAddress = marketContractAddress;
 
     const marketplaceContract = new ethers.Contract(
-      marketplaceAddress,
+      "0x6Ab650e8E4399E2E7E4D2B1888f6712eF458430F",
       marketABI,
       signer
     );
-    const token = new ethers.Contract(tokenContractAddress, tokenABI, signer);
+    const owner = await marketplaceContract.owner();
+    console.log(owner);
 
-    const totalAmount = await token.balanceOf(tokenContractAddress);
+    const token = new ethers.Contract(
+      "0x4D9eA1C94910FDF8E59A77738B21ed6050DFb4BC",
+      tokenABI,
+      signer
+    );
+
+    const balanceOfUserWallet = await token.balanceOf(
+      "0xfa57a10f1b25c57819e6b0713094bd6ade11e504"
+    );
+
+    console.log(parseInt(balanceOfUserWallet));
+
+    const totalAmount = await token.balanceOf(
+      "0x4D9eA1C94910FDF8E59A77738B21ed6050DFb4BC"
+    );
     const totalAllowed = await token.allowance(
       currentAddress,
-      marketplaceAddress
+      "0x4D9eA1C94910FDF8E59A77738B21ed6050DFb4BC"
     );
-    const price = await marketplaceContract.price();
+    let price = await marketplaceContract.price();
 
-    console.log(totalAllowed);
-    console.log(totalAmount);
-    console.log(price);
+    // console.log(totalAllowed);
+    console.log(parseInt(totalAmount));
 
-    // if (price <= totalAmount) {
-    //   if (price <= totalAllowed) {
-    //     const purchase = await marketplaceContract.payInUSDC();
-    //     setBought(purchase);
-    //   } else {
-    //     // don't have enough to buy
-    //   }
+    const formatPrice = (price) => {
+      return price / 1000000000000000000;
+    };
+
+    price = formatPrice(price);
+    console.log(parseInt(price));
+
+    if (price <= parseInt(balanceOfUserWallet)) {
+      // if (price <= totalAllowed) {
+      console.log("Buying....");
+      const purchase = await marketplaceContract.payInUSDC();
+      setBought(purchase);
+    } else {
+      // don't have enough to buy
+      console.log(
+        "You don't have enough to buy on this account. Balance:",
+        parseInt(totalAmount)
+      );
+    }
     // }
   };
 
@@ -165,6 +196,7 @@ const Card = ({ image, name, skill, price }) => {
                 className="buyIcon"
                 src="https://imgur.com/MQHRBrg.png"
                 alt="icon"
+                onClick={payInUSDC}
               ></img>
               <img
                 className="buyIcon"
@@ -174,7 +206,7 @@ const Card = ({ image, name, skill, price }) => {
               <img
                 className="buyIcon"
                 src="https://imgur.com/sQsv7UD.png"
-                alt="icon"
+                alt="ETH icon"
               ></img>
             </div>
             <div>
@@ -186,7 +218,7 @@ const Card = ({ image, name, skill, price }) => {
           <button className="connect-button" onClick={Connect}>
             Connect
           </button>
-          <button className="connect-button" disable="true" onClick={MintMe}>
+          <button className="connect-button" disable="false" onClick={MintMe}>
             Mint me
           </button>
         </div>

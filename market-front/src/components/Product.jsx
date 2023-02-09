@@ -27,7 +27,7 @@ export default function Product(props) {
     console.log();
 
     const walletBalance = await provider.getBalance(currentAddress);
-    console.log(walletBalance);
+    console.log(parseInt(walletBalance));
   };
 
   const getTokenInfo = async () => {
@@ -35,7 +35,7 @@ export default function Product(props) {
     const signer = provider.getSigner();
     const currentAddress = await provider.getSigner().getAddress();
     const token = new ethers.Contract(
-      "0x0EA75a2bFB5bbe3D5D997Ac980774BDA9C6Cf33a",
+      "0x4D9eA1C94910FDF8E59A77738B21ed6050DFb4BC",
       tokenABI,
       signer
     );

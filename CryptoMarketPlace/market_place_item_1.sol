@@ -13,7 +13,7 @@ contract marketplaceItem1 {
     mapping(address => bool) public alreadyBought;
 
     // price of item
-    uint256 public price = 10;
+    uint256 public price = 10 * 10**18;
 
     // sets whoever created contract as the 'owner', money will be transfered to their account
     address public owner = payable(msg.sender);
@@ -21,8 +21,8 @@ contract marketplaceItem1 {
     // imports the tokens to use and build on
     IERC20 public usdcToken =
         IERC20(0xd9145CCE52D386f254917e481eB44e9943F39138); // requires address
-
-    //IERC20 public usdtToken = IERC20 ("0xUSDTontractHERE"); // requires address
+    IERC20 public usdtToken =
+        IERC20(0xd9145CCE52D386f254917e481eB44e9943F39138); // requires address
 
     function payInUSDC() public returns (bool) {
         // checks address is not on alreadyBought list
@@ -47,14 +47,14 @@ contract marketplaceItem1 {
         );
 
         // Transfers the price from sender acc to owner acc
-        usdcToken.transferFrom(msg.sender, owner, price);
+        usdtToken.transferFrom(msg.sender, owner, price);
 
         // adds sender address to Bought list
         alreadyBought[msg.sender] = true;
         return alreadyBought[msg.sender];
     }
 
-    function getCurrentPriceOfEth() public view returns (int256) {
+    function getCurrentPriceOfETH() public view returns (int256) {
         // pulls price of Eth from chain to eight demical places
         (
             ,
@@ -70,12 +70,8 @@ contract marketplaceItem1 {
 
     function getPriceInEth() public view returns (int256) {
         // result of function call
-        return int256(price) / getCurrentPriceOfEth();
+        return int256(price) / getCurrentPriceOfETH();
     }
-
-    // function payInEth() {
-
-    // }
 
     function payInEth() public payable returns (bool) {
         // requires eth sent to be equal to price in ETH

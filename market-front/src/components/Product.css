@@ -1,5 +1,9 @@
 .user-info, .token-info {
     background-color: antiquewhite;
+    padding: 2rem;
+    margin: 1rem;
+    border: solid red;
+    border-radius: 30%;
 }
 
 .info-container {

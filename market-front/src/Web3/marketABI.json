@@ -59,7 +59,20 @@
 	},
 	{
 		"inputs": [],
-		"name": "getCurrentPriceOfEth",
+		"name": "getCurrentPriceOfETH",
+		"outputs": [
+			{
+				"internalType": "int256",
+				"name": "",
+				"type": "int256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getLatestPrice",
 		"outputs": [
 			{
 				"internalType": "int256",
@@ -112,6 +125,19 @@
 	{
 		"inputs": [],
 		"name": "usdcToken",
+		"outputs": [
+			{
+				"internalType": "contract IERC20",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "usdtToken",
 		"outputs": [
 			{
 				"internalType": "contract IERC20",
