@@ -80,7 +80,6 @@ const Card = ({ image, name, skill, price }) => {
   };
 
   const MintMe = async () => {
-    // refactor
     // // connect to contract
     console.log("minting....");
     const provider = new ethers.providers.Web3Provider(window.ethereum);
