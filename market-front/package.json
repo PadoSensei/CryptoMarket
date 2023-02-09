@@ -2,7 +2,7 @@
   "name": "market-front",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://gitname.github.io/CryptoMarket/market-front",
+  "homepage": "https://PadoSensei.github.io/CryptoMarket/market-front",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
